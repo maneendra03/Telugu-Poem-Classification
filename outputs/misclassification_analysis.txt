@@ -1,0 +1,53 @@
+CNN Telugu Poem — Misclassification Analysis
+============================================================
+
+Total test samples: 476
+Misclassified: 97 (20.4%)
+
+--- Top Confused Pairs ---
+  saardulamu → predicted as mattebhamu: 24 times
+  vutpalamaala → predicted as seesamu: 18 times
+  champakamaala → predicted as seesamu: 15 times
+  mattebhamu → predicted as saardulamu: 13 times
+  aataveladi → predicted as kandamu: 11 times
+  vutpalamaala → predicted as champakamaala: 6 times
+  champakamaala → predicted as vutpalamaala: 5 times
+  kandamu → predicted as seesamu: 2 times
+  aataveladi → predicted as seesamu: 1 times
+  teytageethi → predicted as mattebhamu: 1 times
+  aataveladi → predicted as mattebhamu: 1 times
+
+--- Per-Class Error Rate ---
+  aataveladi: 13/104 errors (12.5%)
+  champakamaala: 20/36 errors (55.6%)
+  kandamu: 2/75 errors (2.7%)
+  mattebhamu: 13/56 errors (23.2%)
+  saardulamu: 24/31 errors (77.4%)
+  seesamu: 0/74 errors (0.0%)
+  teytageethi: 1/60 errors (1.7%)
+  vutpalamaala: 24/40 errors (60.0%)
+
+--- Confidence Analysis ---
+  Correct predictions — mean confidence: 0.9030
+  Misclassified — mean confidence: 0.6708
+  Misclassified — max confidence: 0.9893
+  Misclassified — min confidence: 0.2853
+
+  ⚠️  High-confidence misclassifications (>80%): 26
+
+--- Sample Misclassified Poems ---
+
+  [2] True: vutpalamaala | Predicted: champakamaala (54.1%)
+  Text: పండితులైనవారు దిగువం దగనుండగ, నల్పుఁ డొక్కడు ద్ధండతఁ బీఠమెక్కిన బుధ ప్రకరంబులకేమి యెగ్గగున్‌ కొండొకకోతిఁ జెట్టు కొనకొమ్మ...
+
+  [11] True: mattebhamu | Predicted: saardulamu (82.4%)
+  Text: ఉరుసంసారగజేంద్రదర్పదళన వ్యూఢప్రతాపోగ్రకే- సరి దుష్ప్రాపశరీధబంధవిపులక్ష్మాజవ్రజచ్ఛేదవి- స్ఫురితక్రూర కుఠారధార దురితప్రోద్...
+
+  [21] True: kandamu | Predicted: seesamu (90.1%)
+  Text: తన మదిఁ గపటము గలిగిన తనవలెనే కపట ముండు, తగ జీవులకు న్‌ తన మది కపటము విడిచినఁ దన కెవ్వడు కపటి లేఁడు ధరలో వేమా!...
+
+  [27] True: saardulamu | Predicted: mattebhamu (79.3%)
+  Text: నీ కేలన్ దృణ మంది వైవ నదియున్ నిర్ఘాతపాతక్రియన్ గాకాకారనికారదానవుని లోకాలోకపర్యంత మీ లోకంబుల్ పదునాల్గు త్రిప్పినది కాలు...
+
+  [36] True: mattebhamu | Predicted: saardulamu (48.5%)
+  Text: గణుతింతున్ భవదీయ సద్గుణకథల్ కౌతూహలం బొప్పఁగాఁ బ్రణుతింతున్ సచరాచరాదిక మహాబ్రహ్మాండభాండచ్ఛటా- గణితప్రాణిజనాంతరాత్మవని వేడ...

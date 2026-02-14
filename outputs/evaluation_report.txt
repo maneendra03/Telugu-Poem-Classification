@@ -1,0 +1,26 @@
+CNN Telugu Poem Classification — Evaluation Report
+============================================================
+
+Model: /home/jovyan/Telugu-Poem-Learning/models/cnn_chandas.keras
+Test samples: 476
+
+Classification Report:
+               precision    recall  f1-score   support
+
+   aataveladi     1.0000    0.8750    0.9333       104
+champakamaala     0.7273    0.4444    0.5517        36
+      kandamu     0.8690    0.9733    0.9182        75
+   mattebhamu     0.6232    0.7679    0.6880        56
+   saardulamu     0.3500    0.2258    0.2745        31
+      seesamu     0.6727    1.0000    0.8043        74
+  teytageethi     1.0000    0.9833    0.9916        60
+ vutpalamaala     0.7619    0.4000    0.5246        40
+
+     accuracy                         0.7962       476
+    macro avg     0.7505    0.7087    0.7108       476
+ weighted avg     0.8012    0.7962    0.7833       476
+
+Overall Accuracy:  0.7962
+Overall Precision: 0.8012
+Overall Recall:    0.7962
+Overall F1-Score:  0.7833
