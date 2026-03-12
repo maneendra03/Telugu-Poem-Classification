@@ -1,7 +1,7 @@
 """
 Streamlit Web Interface for CNN Telugu Poem Classification System.
 
-A modern, styled web application where users can:
+A modern, premium web application where users can:
 1. Paste a Telugu poem
 2. Get predicted Chandas (meter), Class, and Source
 3. View confidence scores
@@ -35,100 +35,316 @@ st.set_page_config(
 )
 
 # ============================================================
-# CUSTOM CSS — Premium Dark Theme
+# CUSTOM CSS — Premium Design System
 # ============================================================
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Telugu:wght@400;500;600;700&display=swap');
 
-    .stApp {
-        background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+    /* ── Root Variables ── */
+    :root {
+        --bg-primary: #0a0e1a;
+        --bg-secondary: #111827;
+        --bg-card: rgba(17, 24, 39, 0.7);
+        --bg-card-hover: rgba(24, 34, 56, 0.85);
+        --accent-gold: #f59e0b;
+        --accent-gold-light: #fbbf24;
+        --accent-amber: #d97706;
+        --accent-emerald: #10b981;
+        --accent-cyan: #06b6d4;
+        --accent-violet: #8b5cf6;
+        --text-primary: #f1f5f9;
+        --text-secondary: #94a3b8;
+        --text-muted: #64748b;
+        --border-subtle: rgba(148, 163, 184, 0.08);
+        --border-accent: rgba(245, 158, 11, 0.25);
+        --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.3);
+        --shadow-glow: 0 0 40px rgba(245, 158, 11, 0.08);
+        --radius-lg: 16px;
+        --radius-md: 12px;
+        --radius-sm: 8px;
     }
 
-    .main-title {
+    /* ── Global Styles ── */
+    .stApp {
+        background: var(--bg-primary);
+        font-family: 'Inter', sans-serif;
+    }
+
+    .stApp > header { background: transparent !important; }
+
+    /* ── Sidebar ── */
+    section[data-testid="stSidebar"] {
+        background: linear-gradient(180deg, #0f1629 0%, #0a0e1a 100%);
+        border-right: 1px solid var(--border-subtle);
+    }
+    section[data-testid="stSidebar"] .stMarkdown p,
+    section[data-testid="stSidebar"] .stMarkdown li {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+    }
+    section[data-testid="stSidebar"] h3 {
+        color: var(--text-primary) !important;
+        font-weight: 600 !important;
+        font-size: 0.95rem !important;
+        letter-spacing: 0.03em;
+    }
+
+    /* ── Hero Header ── */
+    .hero-container {
         text-align: center;
-        background: linear-gradient(90deg, #f7971e, #ffd200);
+        padding: 2.5rem 1rem 1.8rem;
+        margin-bottom: 1rem;
+    }
+    .hero-icon {
+        font-size: 2.8rem;
+        margin-bottom: 0.4rem;
+        display: block;
+        filter: drop-shadow(0 0 12px rgba(245, 158, 11, 0.4));
+    }
+    .hero-title {
+        font-family: 'Noto Sans Telugu', 'Inter', sans-serif;
+        font-size: 2.2rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, var(--accent-gold-light) 0%, var(--accent-amber) 50%, var(--accent-gold) 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        font-size: 2.5rem;
-        font-weight: 700;
-        margin-bottom: 0.2rem;
+        background-clip: text;
+        margin: 0;
+        line-height: 1.3;
     }
-
-    .subtitle {
-        text-align: center;
-        color: #a8a8b3;
-        font-size: 1.1rem;
-        margin-bottom: 2rem;
-    }
-
-    .telugu-text {
-        font-family: 'Noto Sans Telugu', sans-serif;
-        font-size: 1.2rem;
-        line-height: 2;
-    }
-
-    .result-card {
-        background: rgba(255, 255, 255, 0.05);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 16px;
-        padding: 1.5rem;
-        margin: 0.75rem 0;
-        transition: transform 0.2s;
-    }
-
-    .result-card:hover {
-        transform: translateY(-2px);
-        border-color: rgba(247, 151, 30, 0.4);
-    }
-
-    .label-text {
-        color: #a8a8b3;
-        font-size: 0.85rem;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        margin-bottom: 0.3rem;
-    }
-
-    .value-text {
-        color: #ffffff;
-        font-size: 1.4rem;
-        font-weight: 600;
-    }
-
-    .confidence-bar {
-        height: 6px;
-        border-radius: 3px;
-        background: rgba(255, 255, 255, 0.1);
+    .hero-subtitle {
+        color: var(--text-muted);
+        font-size: 0.95rem;
+        font-weight: 400;
         margin-top: 0.5rem;
+        letter-spacing: 0.05em;
     }
 
-    .confidence-fill {
+    /* ── Divider ── */
+    .styled-divider {
+        height: 1px;
+        background: linear-gradient(90deg, transparent, var(--border-accent), transparent);
+        margin: 0.5rem 0 1.5rem;
+        border: none;
+    }
+
+    /* ── Section Headers ── */
+    .section-header {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        margin-bottom: 1rem;
+    }
+    .section-header-icon {
+        font-size: 1.3rem;
+    }
+    .section-header-text {
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        letter-spacing: 0.02em;
+    }
+
+    /* ── Text Area ── */
+    .stTextArea textarea {
+        background: var(--bg-secondary) !important;
+        border: 1px solid var(--border-subtle) !important;
+        border-radius: var(--radius-md) !important;
+        color: var(--text-primary) !important;
+        font-family: 'Noto Sans Telugu', 'Inter', sans-serif !important;
+        font-size: 1.05rem !important;
+        line-height: 1.9 !important;
+        padding: 1rem !important;
+        transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+    .stTextArea textarea:focus {
+        border-color: var(--accent-gold) !important;
+        box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.15) !important;
+    }
+    .stTextArea textarea::placeholder {
+        color: var(--text-muted) !important;
+        opacity: 0.6;
+    }
+    .stTextArea label {
+        color: var(--text-secondary) !important;
+        font-size: 0.85rem !important;
+        font-weight: 500 !important;
+    }
+
+    /* ── Primary Button ── */
+    .stButton > button[kind="primary"] {
+        background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-amber) 100%) !important;
+        color: #0a0e1a !important;
+        font-weight: 600 !important;
+        font-size: 1rem !important;
+        border: none !important;
+        border-radius: var(--radius-md) !important;
+        padding: 0.65rem 1.5rem !important;
+        letter-spacing: 0.03em;
+        transition: all 0.25s ease !important;
+        box-shadow: 0 4px 16px rgba(245, 158, 11, 0.25) !important;
+    }
+    .stButton > button[kind="primary"]:hover {
+        transform: translateY(-1px) !important;
+        box-shadow: 0 6px 24px rgba(245, 158, 11, 0.35) !important;
+    }
+
+    /* ── Result Cards ── */
+    .result-card {
+        background: var(--bg-card);
+        backdrop-filter: blur(16px);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-lg);
+        padding: 1.25rem 1.5rem;
+        margin-bottom: 0.85rem;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: var(--shadow-card);
+    }
+    .result-card:hover {
+        border-color: var(--border-accent);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-card), var(--shadow-glow);
+    }
+    .result-label {
+        font-size: 0.72rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--text-muted);
+        margin-bottom: 0.35rem;
+    }
+    .result-value {
+        font-size: 1.35rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        font-family: 'Noto Sans Telugu', 'Inter', sans-serif;
+    }
+
+    /* ── Accent Colors for Cards ── */
+    .result-card.gold    { border-left: 3px solid var(--accent-gold); }
+    .result-card.emerald { border-left: 3px solid var(--accent-emerald); }
+    .result-card.cyan    { border-left: 3px solid var(--accent-cyan); }
+    .result-card.violet  { border-left: 3px solid var(--accent-violet); }
+
+    /* ── Confidence Meter ── */
+    .conf-track {
+        height: 5px;
+        border-radius: 3px;
+        background: rgba(148, 163, 184, 0.1);
+        margin-top: 0.6rem;
+        overflow: hidden;
+    }
+    .conf-fill {
         height: 100%;
         border-radius: 3px;
-        background: linear-gradient(90deg, #f7971e, #ffd200);
+        transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .conf-fill.gold    { background: linear-gradient(90deg, var(--accent-amber), var(--accent-gold-light)); }
+    .conf-fill.emerald { background: linear-gradient(90deg, #059669, var(--accent-emerald)); }
+    .conf-fill.cyan    { background: linear-gradient(90deg, #0891b2, var(--accent-cyan)); }
+    .conf-text {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        margin-top: 0.3rem;
+        font-weight: 500;
     }
 
-    .interp-box {
-        background: rgba(247, 151, 30, 0.08);
-        border-left: 4px solid #f7971e;
-        border-radius: 0 12px 12px 0;
-        padding: 1.2rem;
-        margin: 1rem 0;
-        font-family: 'Noto Sans Telugu', sans-serif;
-        color: #e0e0e0;
-        line-height: 1.8;
+    /* ── Interpretation Box ── */
+    .interp-container {
+        background: rgba(245, 158, 11, 0.04);
+        border: 1px solid rgba(245, 158, 11, 0.12);
+        border-left: 3px solid var(--accent-gold);
+        border-radius: 0 var(--radius-md) var(--radius-md) 0;
+        padding: 1.25rem 1.5rem;
+        margin-top: 0.5rem;
     }
-
-    .gpu-badge {
-        background: linear-gradient(90deg, #00b09b, #96c93d);
-        color: white;
-        padding: 4px 12px;
-        border-radius: 20px;
-        font-size: 0.75rem;
+    .interp-method {
+        display: inline-block;
+        font-size: 0.7rem;
         font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--accent-gold);
+        background: rgba(245, 158, 11, 0.1);
+        padding: 0.2rem 0.6rem;
+        border-radius: 4px;
+        margin-bottom: 0.7rem;
     }
+    .interp-text {
+        font-family: 'Noto Sans Telugu', sans-serif;
+        font-size: 1.05rem;
+        line-height: 2;
+        color: var(--text-secondary);
+    }
+
+    /* ── Status Badge ── */
+    .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-size: 0.72rem;
+        font-weight: 600;
+        padding: 0.3rem 0.75rem;
+        border-radius: 20px;
+        letter-spacing: 0.05em;
+    }
+    .status-badge.ready {
+        background: rgba(16, 185, 129, 0.12);
+        color: var(--accent-emerald);
+        border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+    .status-badge.no-model {
+        background: rgba(245, 158, 11, 0.12);
+        color: var(--accent-gold);
+        border: 1px solid rgba(245, 158, 11, 0.2);
+    }
+
+    /* ── Meter Chip ── */
+    .meter-chip {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.45rem 0.8rem;
+        background: rgba(148, 163, 184, 0.04);
+        border-radius: var(--radius-sm);
+        margin-bottom: 0.35rem;
+        border: 1px solid var(--border-subtle);
+        transition: background 0.2s ease;
+    }
+    .meter-chip:hover {
+        background: rgba(148, 163, 184, 0.08);
+    }
+    .meter-telugu {
+        font-family: 'Noto Sans Telugu', sans-serif;
+        font-size: 0.95rem;
+        color: var(--text-primary);
+        font-weight: 500;
+    }
+    .meter-english {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        font-family: 'Inter', monospace;
+        letter-spacing: 0.02em;
+    }
+
+    /* ── Expander ── */
+    .streamlit-expanderHeader {
+        background: var(--bg-card) !important;
+        border-radius: var(--radius-md) !important;
+        border: 1px solid var(--border-subtle) !important;
+        color: var(--text-secondary) !important;
+    }
+
+    /* ── Warning / Error ── */
+    .stAlert {
+        border-radius: var(--radius-md) !important;
+    }
+
+    /* ── Hide default Streamlit elements ── */
+    #MainMenu { visibility: hidden; }
+    footer { visibility: hidden; }
+    .stDeployButton { display: none; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -219,117 +435,181 @@ def predict_poem(text: str, models: dict) -> dict:
 
 
 # ============================================================
+# HELPER — HTML result card
+# ============================================================
+def render_result_card(label: str, value: str, accent: str = "gold",
+                       confidence: float = None, conf_color: str = "gold"):
+    """Render a styled result card with optional confidence bar."""
+    conf_html = ""
+    if confidence is not None:
+        pct = confidence * 100
+        conf_html = f"""
+        <div class="conf-track">
+            <div class="conf-fill {conf_color}" style="width: {pct:.0f}%"></div>
+        </div>
+        <div class="conf-text">{pct:.1f}% confidence</div>
+        """
+    st.markdown(f"""
+    <div class="result-card {accent}">
+        <div class="result-label">{label}</div>
+        <div class="result-value">{value}</div>
+        {conf_html}
+    </div>
+    """, unsafe_allow_html=True)
+
+
+# ============================================================
 # UI LAYOUT
 # ============================================================
 def main():
-    # Header
-    st.markdown('<h1 class="main-title">📜 తెలుగు పద్య విశ్లేషణ</h1>', unsafe_allow_html=True)
-    st.markdown('<p class="subtitle">CNN-Based Telugu Poem Learning & Interpretation System</p>',
-                unsafe_allow_html=True)
+    # ── Hero Header ──
+    st.markdown("""
+    <div class="hero-container">
+        <span class="hero-icon">📜</span>
+        <h1 class="hero-title">తెలుగు పద్య విశ్లేషణ</h1>
+        <p class="hero-subtitle">CNN-Powered Telugu Poem Classification &amp; Interpretation</p>
+    </div>
+    <div class="styled-divider"></div>
+    """, unsafe_allow_html=True)
 
-    # Sidebar
+    # ── Sidebar ──
     with st.sidebar:
-        st.markdown("### ⚙️ System Info")
-        st.markdown('<span class="gpu-badge">🚀 NVIDIA H200 GPU</span>', unsafe_allow_html=True)
+        st.markdown("### 🖥️ System")
+        # Model status
+        has_models = os.path.exists(config.TOKENIZER_PATH)
+        if has_models:
+            st.markdown(
+                '<span class="status-badge ready">● Models Loaded</span>',
+                unsafe_allow_html=True
+            )
+        else:
+            st.markdown(
+                '<span class="status-badge no-model">○ No Models</span>',
+                unsafe_allow_html=True
+            )
+
         st.markdown("---")
-        st.markdown("### 📊 Model Capabilities")
+
+        st.markdown("### 📊 Capabilities")
         st.markdown("""
         - **Chandas** — 8 meter types
         - **Class** — 3 categories
         - **Source** — 28+ satakams
-        - **Interpretation** — extract/generate
+        - **Interpretation** — extract / keywords
         """)
+
         st.markdown("---")
-        st.markdown("### 📝 Meter Types")
-        meters = {
-            'ఆటవెలది': 'aataveladi',
-            'కందము': 'kandamu',
-            'తేటగీతి': 'teytageethi',
-            'సీసము': 'seesamu',
-            'మత్తేభము': 'mattebhamu',
-            'చంపకమాల': 'champakamaala',
-            'ఉత్పలమాల': 'vutpalamaala',
-            'శార్దూలము': 'saardulamu'
-        }
-        for telugu, english in meters.items():
-            st.markdown(f"**{telugu}** → `{english}`")
 
-    # Main content
-    col1, col2 = st.columns([1, 1])
+        st.markdown("### 📝 Meter Reference")
+        meters = [
+            ('ఆటవెలది', 'aataveladi'),
+            ('కందము', 'kandamu'),
+            ('తేటగీతి', 'teytageethi'),
+            ('సీసము', 'seesamu'),
+            ('మత్తేభము', 'mattebhamu'),
+            ('చంపకమాల', 'champakamaala'),
+            ('ఉత్పలమాల', 'vutpalamaala'),
+            ('శార్దూలము', 'saardulamu'),
+        ]
+        for telugu, english in meters:
+            st.markdown(f"""
+            <div class="meter-chip">
+                <span class="meter-telugu">{telugu}</span>
+                <span class="meter-english">{english}</span>
+            </div>
+            """, unsafe_allow_html=True)
 
-    with col1:
-        st.markdown("### 📝 Enter Telugu Poem")
+    # ── Main Content ──
+    col_input, col_spacer, col_output = st.columns([5, 0.5, 5])
+
+    with col_input:
+        st.markdown("""
+        <div class="section-header">
+            <span class="section-header-icon">✍️</span>
+            <span class="section-header-text">Enter Your Telugu Poem</span>
+        </div>
+        """, unsafe_allow_html=True)
+
         poem_text = st.text_area(
-            "Paste your Telugu poem here:",
-            height=250,
-            placeholder="శ్రీమదనంత లక్ష్మీ యుతోరః స్థల...",
-            key="poem_input"
+            "Paste your Telugu poem below",
+            height=280,
+            placeholder="శ్రీమదనంత లక్ష్మీ యుతోరః స్థల…",
+            key="poem_input",
+            label_visibility="collapsed"
         )
 
-        predict_btn = st.button("🔍 Analyze Poem", type="primary", use_container_width=True)
+        predict_btn = st.button(
+            "🔍  Analyze Poem",
+            type="primary",
+            use_container_width=True
+        )
 
-    with col2:
+    with col_output:
         if predict_btn and poem_text.strip():
-            # Check if models exist
+            # ── Guard: models must exist ──
             if not os.path.exists(config.TOKENIZER_PATH):
                 st.error("⚠️ Models not trained yet! Run `python main.py --mode train` first.")
                 return
 
-            with st.spinner("🔄 Analyzing poem..."):
+            with st.spinner("Analyzing poem…"):
                 models = load_models()
                 results = predict_poem(poem_text, models)
 
-            # Display results
-            st.markdown("### 📊 Analysis Results")
+            # ── Results Header ──
+            st.markdown("""
+            <div class="section-header">
+                <span class="section-header-icon">📊</span>
+                <span class="section-header-text">Analysis Results</span>
+            </div>
+            """, unsafe_allow_html=True)
 
-            # Chandas prediction
+            # ── Chandas ──
             if 'chandas' in results:
-                st.markdown(f"""
-                <div class="result-card">
-                    <div class="label-text">Predicted Chandas (ఛందస్సు)</div>
-                    <div class="value-text">{results['chandas']}</div>
-                    <div class="confidence-bar">
-                        <div class="confidence-fill" style="width: {results['chandas_confidence']*100:.0f}%"></div>
-                    </div>
-                    <div class="label-text" style="margin-top: 4px">{results['chandas_confidence']*100:.1f}% confidence</div>
-                </div>
-                """, unsafe_allow_html=True)
+                render_result_card(
+                    "Predicted Chandas · ఛందస్సు",
+                    results['chandas'],
+                    accent="gold",
+                    confidence=results.get('chandas_confidence'),
+                    conf_color="gold"
+                )
 
-            # Class prediction
+            # ── Class ──
             if 'class' in results:
-                st.markdown(f"""
-                <div class="result-card">
-                    <div class="label-text">Meter Class (వర్గం)</div>
-                    <div class="value-text">{results['class']}</div>
-                </div>
-                """, unsafe_allow_html=True)
+                render_result_card(
+                    "Meter Class · వర్గం",
+                    results['class'],
+                    accent="emerald"
+                )
 
-            # Source prediction
+            # ── Source ──
             if 'source' in results:
-                st.markdown(f"""
-                <div class="result-card">
-                    <div class="label-text">Predicted Source (శతకం)</div>
-                    <div class="value-text">{results['source']}</div>
-                    <div class="confidence-bar">
-                        <div class="confidence-fill" style="width: {results['source_confidence']*100:.0f}%"></div>
-                    </div>
-                    <div class="label-text" style="margin-top: 4px">{results['source_confidence']*100:.1f}% confidence</div>
-                </div>
-                """, unsafe_allow_html=True)
+                render_result_card(
+                    "Predicted Source · శతకం",
+                    results['source'],
+                    accent="cyan",
+                    confidence=results.get('source_confidence'),
+                    conf_color="cyan"
+                )
 
-            # Interpretation
+            # ── Interpretation ──
             if results.get('interpretation'):
                 interp = results['interpretation']
-                st.markdown("### 📖 Interpretation")
-                method_label = "🔍 Extracted" if interp['method'] == 'extracted' else "🔑 Keywords"
-                st.markdown(f"*Method: {method_label}*")
-                st.markdown(f"""
-                <div class="interp-box telugu-text">
-                    {interp['interpretation']}
+                st.markdown("""
+                <div class="section-header" style="margin-top: 1rem;">
+                    <span class="section-header-icon">📖</span>
+                    <span class="section-header-text">Interpretation</span>
                 </div>
                 """, unsafe_allow_html=True)
 
-            # All chandas probabilities
+                method_label = "Extracted" if interp['method'] == 'extracted' else "Keywords"
+                st.markdown(f"""
+                <div class="interp-container">
+                    <div class="interp-method">🔎 {method_label}</div>
+                    <div class="interp-text">{interp['interpretation']}</div>
+                </div>
+                """, unsafe_allow_html=True)
+
+            # ── All Chandas Probabilities ──
             if 'chandas_all' in results:
                 with st.expander("📈 All Chandas Probabilities"):
                     sorted_probs = sorted(results['chandas_all'].items(),
@@ -339,6 +619,24 @@ def main():
 
         elif predict_btn:
             st.warning("⚠️ Please enter a Telugu poem first!")
+        else:
+            # ── Empty state ──
+            st.markdown("""
+            <div class="section-header">
+                <span class="section-header-icon">📊</span>
+                <span class="section-header-text">Analysis Results</span>
+            </div>
+            """, unsafe_allow_html=True)
+            st.markdown("""
+            <div class="result-card" style="text-align:center; padding: 3rem 1.5rem;">
+                <div style="font-size: 2.5rem; margin-bottom: 0.8rem; opacity: 0.3;">📜</div>
+                <div style="color: var(--text-muted); font-size: 0.95rem;">
+                    Paste a Telugu poem on the left and click<br>
+                    <strong style="color: var(--text-secondary);">Analyze Poem</strong>
+                    to see results here.
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
 
 
 if __name__ == "__main__":
