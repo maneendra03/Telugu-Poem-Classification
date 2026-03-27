@@ -8,3 +8,6 @@ env/
 *.log
 .idea/
 .vscode/
+node_modules/
+frontend/dist/
+.env

@@ -176,4 +176,24 @@ This directly models the project's central thesis: *learning inspired by human r
 
 ## 📄 Technical Stack
 
-Python | TensorFlow/Keras | NumPy | Pandas | scikit-learn | Matplotlib | Seaborn | Streamlit
+Python | TensorFlow/Keras | NumPy | Pandas | scikit-learn | Matplotlib | Seaborn | FastAPI | React | Vite
+
+## 🚀 Quick Start (React + FastAPI)
+
+```bash
+# 1. Start the FastAPI backend (from project root)
+./venv/bin/uvicorn backend.main:app --host 0.0.0.0 --port 8000
+
+# 2. Start the React frontend (in a separate terminal)
+cd frontend && npm run dev
+
+# 3. Open http://localhost:5173 in your browser
+```
+
+> **Note:** Models must be trained first via `python main.py --mode train` before prediction is available.
+
+### Streamlit (Legacy)
+```bash
+streamlit run app.py
+```
+
