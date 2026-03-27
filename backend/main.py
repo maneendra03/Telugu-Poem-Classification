@@ -524,6 +524,18 @@ SAMPLE_POEMS = [
 # ============================================================
 # ENDPOINTS
 # ============================================================
+@app.get("/")
+async def root():
+    """Root endpoint — confirms API is running."""
+    return {
+        "app": "Telugu Poem Classification API",
+        "version": "2.0.0",
+        "docs": "/docs",
+        "health": "/api/health",
+        "predict": "/api/predict",
+    }
+
+
 @app.get("/api/health", response_model=HealthResponse)
 async def health():
     """Health check and model status."""
